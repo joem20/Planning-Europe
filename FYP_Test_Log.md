@@ -9,13 +9,14 @@ This file records tests carried out during the development of the graph-based ro
 | T01 | Dijkstra: London to Paris, λ = 10 | Eurostar L01, generalised cost £81.33 | 15 Nov 2026 | PASS |
 | T02 | Multi-connection journey: Lyon to Zurich, λ = 10 | Lyon–Milan–Zurich using L24 and L15, total cost £144.32 | — | Not tested |
 | T03 | Compare own Dijkstra with NetworkX | Same minimum generalised cost and route | — | Not tested |
-| T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | — | Not tested |
+| T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | 15 Nov 2026 | PASS |
 | T05 | Unreachable destination | Algorithm handles a destination with no available route | — | Not tested |
 | T06 | Lambda sensitivity: £0, £5, £10, £20 and £30 | Record route, cost and winning service changes against break-even values | — | Not tested |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
+| T08 | Negative lambda validation | Negative λ raises ValueError | – | Not tested |
+| T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
+| T10 | Starting city equals destination | Returns generalised cost 0 | – | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | — | Not tested |
-| T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | — | Not tested |
-| T10 | Starting city equals destination | Returns generalised cost 0 | — | Not tested |
 
 ## T01 – Basic Dijkstra test: London to Paris
 
@@ -43,3 +44,90 @@ This file records tests carried out during the development of the graph-based ro
 **Evidence:** Output from the Dijkstra test cell in `Graph_Construction.ipynb`.
 
 **Comments:** The algorithm successfully calculated the minimum generalised cost for this direct journey. Further testing is required for multi-connection journeys, parallel transport options and comparison against NetworkX.
+
+## T09 – Small Graph: Known Shortest Route
+
+**Date:** 15 November 2026
+
+**Component:** Dijkstra implementation
+
+**Objective:** Test the Dijkstra algorithm using a small graph with manually verifiable edge costs and a known shortest route.
+
+**Test inputs:**
+
+Starting node: A
+
+Destination node: D
+
+The test graph contained five connections:
+
+| Connection | Generalised cost |
+|---|---:|
+| A–B | 4 |
+| A–C | 2 |
+| C–B | 1 |
+| B–D | 5 |
+| C–D | 8 |
+
+**Expected result:**
+
+The minimum-cost route should be A → C → B → D.
+
+Total cost: 2 + 1 + 5 = **8**.
+
+**Initial failed attempt and correction:**
+
+The first test used `nx.Graph()` and `add_weighted_edges_from()`. This stored edge costs under the `weight` attribute, whereas the Dijkstra implementation expected each edge to have a `generalised_cost` attribute and used MultiGraph edge iteration.
+
+This caused a `TypeError: 'int' object is not subscriptable` when the algorithm attempted to access the edge data.
+
+The test graph was corrected by:
+
+- Changing the test graph to `nx.MultiGraph()`.
+- Adding edges individually with `generalised_cost` attributes.
+- Assigning link IDs as edge keys.
+
+This made the test graph compatible with the existing Dijkstra implementation.
+
+**Actual result:**
+
+- Shortest cost: 8
+- Previous node and link for D: B, BD
+- Reconstructed route: A → C → B → D
+
+**Result:** PASS
+
+**Evidence:** Output from the corrected test graph creation, Dijkstra execution and route reconstruction cells in `Graph_Construction.ipynb`. Commit `a1b5527`.
+## T04 – London to Paris: Lambda = 0
+
+**Date:** 15 November 2026
+
+**Component:** Generalised cost calculation and Dijkstra implementation
+
+**Objective:** Test whether the algorithm selects the cheapest transport service when journey time has no influence on generalised cost.
+
+**Test inputs:**
+
+- Starting city: London
+- Destination city: Paris
+- Lambda: £0 per hour
+- Dataset: Dataset v1
+
+**Expected result:**
+
+With λ = 0, generalised cost depends entirely on ticket price.
+
+FlixBus link L16 should be selected at £28.49.
+
+**Actual result:**
+
+- Lambda: 0
+- Shortest generalised cost: £28.49
+- Previous city and link: London, L16
+- Selected service: FlixBus
+
+After the test, the graph's generalised costs were reset to λ = 10 for subsequent tests.
+
+**Result:** PASS
+
+**Evidence:** Output from the T04 Dijkstra test cell in `Graph_Construction.ipynb`. Commit `c25bf4f`.
