@@ -1,6 +1,6 @@
 # FYP Test Log
 
-This file records tests carried out during the development of the graph-based route planning system.
+This file records tests conducted during the development of the graph-based route planning system.
 
 ## Test Summary
 
@@ -13,7 +13,7 @@ This file records tests carried out during the development of the graph-based ro
 | T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
 | T06 | Lambda sensitivity: £0, £5, £10, £20 and £30 | Record route, cost and winning service changes against break-even values | — | Not tested |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
-| T08 | Negative lambda validation | Negative λ raises ValueError | – | Not tested |
+| T08 | Negative lambda validation | Negative λ raises ValueError | – | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
 | T10 | Starting city equals destination | Returns generalised cost 0 | – | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | — | Not tested |
@@ -158,3 +158,24 @@ After the test, the graph's generalised costs were reset to λ = 10 for subseque
 **Result:** PASS
 
 **Evidence:** Output from the T05 graph creation and Dijkstra execution cells in `Graph_Construction.ipynb`. Commit `f7d544b`.
+## T08 – Negative lambda validation
+
+**Date:** 15 November 2026
+
+**Component:** Generalised cost calculation
+
+**Objective:** Verify that the function rejects negative lambda values, following the requirement that λ must be non-negative.
+
+**Test input:**
+- Lambda: -1
+
+**Expected result:** The function should raise a ValueError with the message "lambda must be non-negative".
+
+**Actual result:**
+- Negative lambda rejected.
+- Error: lambda must be non-negative.
+- Main graph costs reset to λ = 10 after the test.
+
+**Result:** PASS
+
+**Evidence:** Output from the T08 negative lambda validation cell in `Graph_Construction.ipynb`. Commit `5513669`.
