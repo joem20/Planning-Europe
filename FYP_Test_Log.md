@@ -16,7 +16,7 @@ This file records tests conducted during the development of the graph-based rout
 | T08 | Negative lambda validation | Negative λ raises ValueError | – | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
 | T10 | Starting city equals destination | Returns generalised cost 0 | – | Not tested |
-| T08 | Negative lambda validation | Negative λ raises ValueError | — | Not tested |
+
 
 ## T01 – Basic Dijkstra test: London to Paris
 
