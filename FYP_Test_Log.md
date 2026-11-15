@@ -10,7 +10,7 @@ This file records tests carried out during the development of the graph-based ro
 | T02 | Multi-connection journey: Lyon to Zurich, λ = 10 | Lyon–Milan–Zurich using L24 and L15, total cost £144.32 | — | Not tested |
 | T03 | Compare own Dijkstra with NetworkX | Same minimum generalised cost and route | — | Not tested |
 | T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | 15 Nov 2026 | PASS |
-| T05 | Unreachable destination | Algorithm handles a destination with no available route | — | Not tested |
+| T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
 | T06 | Lambda sensitivity: £0, £5, £10, £20 and £30 | Record route, cost and winning service changes against break-even values | — | Not tested |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | – | Not tested |
@@ -59,7 +59,7 @@ Starting node: A
 
 Destination node: D
 
-The test graph contained five connections:
+The test graph contains five connections:
 
 | Connection | Generalised cost |
 |---|---:|
@@ -104,7 +104,7 @@ This made the test graph compatible with the existing Dijkstra implementation.
 
 **Component:** Generalised cost calculation and Dijkstra implementation
 
-**Objective:** Test whether the algorithm selects the cheapest transport service when journey time has no influence on generalised cost.
+**Objective:** Test whether the algorithm selects the cheapest transport service when journey time does not influence generalised cost.
 
 **Test inputs:**
 
@@ -131,3 +131,30 @@ After the test, the graph's generalised costs were reset to λ = 10 for subseque
 **Result:** PASS
 
 **Evidence:** Output from the T04 Dijkstra test cell in `Graph_Construction.ipynb`. Commit `c25bf4f`.
+
+## T05 – Unreachable destination
+
+**Date:** 15 November 2026
+
+**Component:**  Dijkstra implementation
+
+**Objective:** Verify that Dijkstra handles a destination that exists in the graph but cannot be reached from the starting city.
+
+**Test setup:**
+- Starting node: A
+- Destination node: D
+- A–B cost: 4
+- B–C cost: 3
+- D added as an isolated node with no connections.
+
+**Expected result:** Dijkstra should return infinity for D, without raising an error.
+
+**Actual result:**
+- Nodes: A, B, C, D
+- Edges: A–B and B–C
+- Shortest cost: infinity
+- Is destination unreachable: True
+
+**Result:** PASS
+
+**Evidence:** Output from the T05 graph creation and Dijkstra execution cells in `Graph_Construction.ipynb`. Commit `f7d544b`.
