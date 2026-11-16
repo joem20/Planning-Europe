@@ -8,7 +8,7 @@ This file records tests conducted during the development of the graph-based rout
 |---|---|---|---|---|
 | T01 | Dijkstra: London to Paris, λ = 10 | Eurostar L01, generalised cost £81.33 | 15 Nov 2026 | PASS |
 | T02 | Multi-connection journey: Lyon to Zurich, λ = 10 | Minimum-cost route via L24 and L15, total cost £144.32 | 16 Nov 2026 | PASS |
-| T03 | Compare own Dijkstra with NetworkX | Same minimum generalised cost and route | — | Not tested |
+| T03 | Full comparison of own Dijkstra with NetworkX: 5 lambda values and 90 ordered city pairs | 450/450 matches, 0 mismatches | 16 Nov 2026 | PASS |
 | T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | 15 Nov 2026 | PASS |
 | T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
 | T06 | Lambda sensitivity: £0, £5, £10, £20 and £30 | Record route, cost and winning service changes against break-even values | — | Not tested |
