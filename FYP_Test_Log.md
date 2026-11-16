@@ -179,3 +179,25 @@ After the test, the graph's generalised costs were reset to λ = 10 for subseque
 **Result:** PASS
 
 **Evidence:** Output from the T08 negative lambda validation cell in `Graph_Construction.ipynb`. Commit `5513669`.
+## T02 – Multi-city journey: Lyon to Zurich (λ = £10/hour)
+
+**Date:** 16 November 2026
+
+**Objective:** Check that Dijkstra finds the minimum-cost multi-city route.
+
+**Hand calculation (done before comparing with the program output):**
+Generalised cost = price (£) + 10 × time (hours), from `routes_dataset_v1.csv`.
+
+| Link | Price (£) | Time (h) | Cost |
+|---|---:|---:|---:|
+| Lyon–Milan FlixBus (L24) | 21.49 | 6.083 | 21.49 + 60.83 = 82.32 |
+| Milan–Zurich (L15) | 29.17 | 3.283 | 29.17 + 32.83 = 62.00 |
+| Lyon–Paris OUIGO (L06) | 20.85 | 1.933 | 20.85 + 19.33 = 40.18 |
+| Paris–Zurich (L14) | 75.89 | 4.067 | 75.89 + 40.67 = 116.56 |
+
+| Candidate route | Total cost |
+|---|---:|
+| Lyon → Milan → Zurich (L24, L15) | 144.32 |
+| Lyon → Paris → Zurich (L06, L14) | 156.74 |
+
+**Expected result:** Lyon → Milan → Zurich via L24 and L15, cost £144.32.
