@@ -14,6 +14,7 @@
 | D09 | 11 Nov 2026 | Replied to the supervisor, noting that Dataset v1 was already collected and asking him to review the selection rule. | He was not aware of the dataset. | Email |
 | D11 | 14 Nov 2026 | Created public GitHub repo `joem20/Planning-Europe`; froze Dataset v1 as tag `dataset-v1` (commit `7a13a8c`); notebook loads the CSV from the tag. | Reproducibility required by the brief. | Release page, notebook |
 | D12 | 14 Nov 2026 | Built an undirected weighted MultiGraph containing 10 city nodes and 27 transport edges. Confirmed that the graph is connected. | A MultiGraph supports multiple transport options between the same city pairs. The connected network provides the foundation for route-finding algorithms. | Graph_Construction.ipynb |
+| D13 | 16 Nov 2026 | Own Dijkstra validated against NetworkX (450 comparisons, no mismatches) | To check the reliability of my own implementation across five lambda values and all 90 ordered city pairs. | T03 results in Graph_Construction.ipynb; 450 matches, 0 mismatches. |
 
 
 
