@@ -413,4 +413,4 @@ At λ = £0, journey time has no value, and there is no interchange penalty in t
 
 **Result: PASS.** The full-network sensitivity analysis completed all 450 route calculations. The results showed changes in route selection across the five lambda values and identified differences in the frequency of selected transport links.
 
-
+Evidence: Output from the T06b sensitivity analysis and link-frequency cells in Graph_Construction.ipynb. Notebook commit: 
