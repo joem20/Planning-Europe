@@ -239,3 +239,37 @@ The program produced the following results:
 
 **Result:** The Lyon–Zurich sensitivity test matched the predictions.
 **Evidence:** Prediction written and committed on 17 Nov 2026 (16:24) before the run; results recorded in commit `fcd7d2e`
+
+**Date:** 17 November 2026
+
+### Preliminary T06b findings – Full-network sensitivity
+
+The full-network analysis completed 450 route calculations, covering 90 ordered city pairs across five lambda values (£0, £5, £10, £20 and £30).
+
+A total of 66 out of 90 ordered journeys (73.3%) changed their selected transport links at least once. These represent 33 of the 45 unique city pairs.
+
+The number of ordered journeys changing route between consecutive lambda values was:
+
+| Lambda interval | Ordered journeys changing route |
+|---|---:|
+| £0 to £5 | 44 |
+| £5 to £10 | 12 |
+| £10 to £20 | 36 |
+| £20 to £30 | 12 |
+
+The most significant changes occurred between £0 and £5, followed by the range of £10 to £20. This suggests that the assigned value of journey time can significantly influence the routes chosen by the optimiser.
+
+These findings are preliminary, and further analysis of individual route changes and transportation links is necessary.
+### Prediction before testing – Transport-link frequency
+
+**Date:** 17 November 2026
+
+I expect the most frequently selected transport links to change as the value of time increases.
+
+1. **At λ = £0:** I expect coach links, particularly FlixBus services L18, L19 and L20, to feature prominently in the top ten because ticket price is the only factor in the generalised cost.
+
+2. **As λ increases:** I expect rail services to become more prominent and coach services to become less frequent in the selected routes, because journey time has an increasing influence on generalised cost.
+
+3. **At λ = £30:** I expect faster rail connections, including Eurostar links L01, L03 and L04 and DB link L12, to feature more prominently. I also predict that Lyon–Milan rail link L25 may replace the slower coach link L24 in the most frequently selected links.
+
+These are predictions, not established results. The frequency analysis will determine whether they are supported by the program output.
