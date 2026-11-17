@@ -273,3 +273,144 @@ I expect the most frequently selected transport links to change as the value of 
 3. **At λ = £30:** I expect faster rail connections, including Eurostar links L01, L03 and L04 and DB link L12, to feature more prominently. I also predict that Lyon–Milan rail link L25 may replace the slower coach link L24 in the most frequently selected links.
 
 These are predictions, not established results. The frequency analysis will determine whether they are supported by the program output.
+## T06b – Full-network lambda sensitivity analysis
+
+**Date:** 17 November 2026
+
+**Objective:** Examine how changing the value of time (λ) affects route selection across the complete ten-city transport network.
+
+**Method:** The program tested five lambda values (£0, £5, £10, £20 and £30 per hour) across all 90 ordered pairs of distinct cities. This produced 450 route calculations. For each calculation, the selected route and its generalised cost were recorded.
+
+### Prediction before testing
+
+Before running the analysis, I predicted that coach links would dominate at λ = £0 because journey time has no cost at this value. I expected rail links to become more prominent as λ increased, because faster journeys would become more attractive.
+
+I also predicted that L24 would be replaced by L25 in the top ten at λ = £30.
+
+### Actual results
+
+**Total route calculations:** 450
+
+**Route changes between lambda values:**
+
+| Lambda interval | Number of route changes |
+|---|---:|
+| £0 to £5 | 44 |
+| £5 to £10 | 12 |
+| £10 to £20 | 36 |
+| £20 to £30 | 12 |
+
+There were **66 ordered city pairs** with at least one route change across the lambda values, representing **33 unique unordered city pairs**.
+
+### Coach and rail links in the top ten
+
+| λ (£/hour) | Coach links | Rail links |
+|---:|---:|---:|
+| 0 | 6 | 4 |
+| 5 | 4 | 6 |
+| 10 | 3 | 7 |
+| 20 | 2 | 8 |
+| 30 | 1 | 9 |
+
+The results show a clear increase in the proportion of rail links in the top ten as the value of time increases. Coach links decreased from six at λ = £0 to one at λ = £30.
+
+### Most frequently selected links
+
+The ten most frequently selected links at each lambda value were:
+
+**λ = £0/hour**
+
+| Link | Mode | Selections |
+|---|---|---:|
+| L19 | Coach | 38 |
+| L18 | Coach | 36 |
+| L20 | Coach | 26 |
+| L27 | Rail | 22 |
+| L23 | Coach | 22 |
+| L06 | Rail | 20 |
+| L16 | Coach | 18 |
+| L24 | Coach | 14 |
+| L15 | Rail | 12 |
+| L10 | Rail | 10 |
+
+**λ = £5/hour**
+
+| Link | Mode | Selections |
+|---|---|---:|
+| L18 | Coach | 30 |
+| L09 | Rail | 24 |
+| L06 | Rail | 22 |
+| L11 | Rail | 20 |
+| L23 | Coach | 16 |
+| L01 | Rail | 14 |
+| L24 | Coach | 12 |
+| L15 | Rail | 10 |
+| L19 | Coach | 8 |
+| L21 | Rail | 8 |
+
+**λ = £10/hour**
+
+| Link | Mode | Selections |
+|---|---|---:|
+| L09 | Rail | 26 |
+| L18 | Coach | 26 |
+| L06 | Rail | 22 |
+| L11 | Rail | 20 |
+| L23 | Coach | 16 |
+| L01 | Rail | 16 |
+| L21 | Rail | 12 |
+| L24 | Coach | 12 |
+| L15 | Rail | 10 |
+| L10 | Rail | 8 |
+
+**λ = £20/hour**
+
+| Link | Mode | Selections |
+|---|---|---:|
+| L11 | Rail | 28 |
+| L06 | Rail | 24 |
+| L09 | Rail | 24 |
+| L04 | Rail | 20 |
+| L27 | Rail | 16 |
+| L23 | Coach | 14 |
+| L24 | Coach | 10 |
+| L02 | Rail | 8 |
+| L15 | Rail | 8 |
+| L14 | Rail | 8 |
+
+**λ = £30/hour**
+
+| Link | Mode | Selections |
+|---|---|---:|
+| L11 | Rail | 26 |
+| L06 | Rail | 24 |
+| L09 | Rail | 24 |
+| L04 | Rail | 20 |
+| L27 | Rail | 16 |
+| L23 | Coach | 12 |
+| L25 | Rail | 10 |
+| L14 | Rail | 10 |
+| L05 | Rail | 8 |
+| L02 | Rail | 8 |
+
+These counts represent link uses across 90 ordered journeys at each lambda value. A link may be selected frequently because of its position and importance within the network; frequency does not necessarily mean that it is independently the most attractive service.
+
+### Additional observations
+
+- **Amsterdam–Berlin:** Three different route regimes appeared. L20 was selected at λ = £0 and £5. At λ = £10, the preferred route changed to Amsterdam → Cologne → Berlin using L10 and L21. At λ = £20 and £30, L12 became the preferred route. This demonstrates that the complete network can identify an intermediate route that would be missed by comparing direct links alone.
+- **L01:** Appeared in the top ten at λ = £5 (14 selections) and λ = £10 (16 selections). It was outside the top ten at λ = £20 and £30, but the top-12 check showed it ranked 11th at £20 and 12th at £30.
+- **L03:** Did not appear in either the top ten or the top twelve at λ = £20 or £30.
+- **L12:** Did not appear in any of the five top-ten lists.
+- **L24 and L25:** L24 appeared 10 times at λ = £20, while L25 appeared 10 times at λ = £30.
+
+### Interpretation and limitations
+
+The results support the prediction that increasing the value of time generally makes rail links more prominent. However, link frequency also reflects network position and the number of journeys that use a particular connection.
+
+At λ = £0, journey time has no value, and there is no interchange penalty in the current basic model. This can produce long journeys involving several coach services. This provides a reason to investigate the expanded routing model and interchange penalty in T07.
+
+### Result
+
+**Result: PASS.** The full-network sensitivity analysis completed all 450 route calculations. The results showed changes in route selection across the five lambda values and identified differences in the frequency of selected transport links.
+
+
