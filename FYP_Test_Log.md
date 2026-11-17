@@ -201,3 +201,21 @@ Generalised cost = price (£) + 10 × time (hours), from `routes_dataset_v1.csv`
 | Lyon → Paris → Zurich (L06, L14) | 156.74 |
 
 **Expected result:** Lyon → Milan → Zurich via L24 and L15, cost £144.32.
+
+**Date:** 17 November 2026
+
+**Prediction before testing – Lyon to Zurich**
+
+Based on the hand calculations, I expect the route via Milan (L24 and L15) to be preferred at lower lambda values because it has a lower ticket price. At higher lambda values, I expect the route via Paris (L06 and L14) to become preferable because it has a shorter journey time.
+
+| Lambda (£/hour) | Predicted route |
+|---:|---|
+| 0 | Lyon → Milan → Zurich (L24, L15) |
+| 5 | Lyon → Milan → Zurich (L24, L15) |
+| 10 | Lyon → Milan → Zurich (L24, L15) |
+| 20 | Lyon → Paris → Zurich (L06, L14) |
+| 30 | Lyon → Paris → Zurich (L06, L14) |
+
+**Predicted break-even point:** Approximately £13.69 per hour, meaning I expect the preferred route to change between λ = £10 and λ = £20.
+
+This prediction is based on comparing these two candidate routes. The program will determine the actual minimum-cost route across the complete network.
