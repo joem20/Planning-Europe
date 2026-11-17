@@ -11,9 +11,11 @@ This file records tests conducted during the development of the graph-based rout
 | T03 | Full comparison of own Dijkstra with NetworkX: 5 lambda values and 90 ordered city pairs | 450/450 matches, 0 mismatches | 16 Nov 2026 | PASS |
 | T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | 15 Nov 2026 | PASS |
 | T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
-| T06 | Lambda sensitivity: £0, £5, £10, £20 and £30 | Record route, cost and winning service changes against break-even values | — | Not tested |
+| T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
+| T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | - | In progress |
+| T06c | Break-even analysis: Lyon to Zurich | Verify the route-switching point against the hand calculation of approximately £13.69/hour | - | Not tested |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
-| T08 | Negative lambda validation | Negative λ raises ValueError | – | PASS |
+| T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
 | T10 | Starting city equals destination | Returns generalised cost 0 | – | Not tested |
 
