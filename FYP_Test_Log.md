@@ -236,3 +236,4 @@ The program produced the following results:
 **Observed route change:** The preferred route changed from via Milan to via Paris between λ = £10 and λ = £20 per hour. This agrees with the predicted break-even point of approximately £13.69 per hour.
 
 **Result:** The Lyon–Zurich sensitivity test matched the predictions.
+**Evidence:** Prediction written and committed on 17 Nov 2026 (16:24) before the run; results recorded in commit `fcd7d2e`
