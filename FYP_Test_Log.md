@@ -219,3 +219,20 @@ Based on the hand calculations, I expect the route via Milan (L24 and L15) to be
 **Predicted break-even point:** Approximately £13.69 per hour, meaning I expect the preferred route to change between λ = £10 and λ = £20.
 
 This prediction is based on comparing these two candidate routes. The program will determine the actual minimum-cost route across the complete network.
+**Actual results – Lyon to Zurich**
+
+The program produced the following results:
+
+| Lambda (£/hour) | Actual route | Transport links | Generalised cost (£) |
+|---:|---|---|---:|
+| 0 | Lyon → Milan → Zurich | L24, L15 | 50.66 |
+| 5 | Lyon → Milan → Zurich | L24, L15 | 97.49 |
+| 10 | Lyon → Milan → Zurich | L24, L15 | 144.32 |
+| 20 | Lyon → Paris → Zurich | L06, L14 | 216.74 |
+| 30 | Lyon → Paris → Zurich | L06, L14 | 276.74 |
+
+**Comparison with prediction:** All five actual route selections matched the predictions.
+
+**Observed route change:** The preferred route changed from via Milan to via Paris between λ = £10 and λ = £20 per hour. This agrees with the predicted break-even point of approximately £13.69 per hour.
+
+**Result:** The Lyon–Zurich sensitivity test matched the predictions.
