@@ -14,8 +14,8 @@ This file records tests conducted during the development of the graph-based rout
 | T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
 | T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | 17 Nov 2026 | PASS |
 | T06c | Break-even analysis: Lyon to Zurich | Verify the route-switching point against the hand calculation of approximately £13.69/hour | - | Not tested |
-| T06d | Symmetry of route costs | All 45 unordered city pairs agree within £0.01 across five λ values | 225 comparisons; 0 failures after floating-point tolerance correction | PASS | 18 Nov 2026 |
-| T06 | Monotonicity of generalised costs | Minimum cost for every ordered city pair does not decrease as λ increases | 360 comparisons; 0 failures | PASS | 18 Nov 2026 |
+| T06d | Symmetry of route costs | All 45 unordered city pairs agree within £0.01 across five λ values | 18 Nov 2026 | PASS |
+| T06e | Monotonicity of generalised costs | Minimum cost for every ordered city pair does not decrease as λ increases | 18 Nov 2026 | PASS |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
