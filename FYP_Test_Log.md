@@ -14,6 +14,8 @@ This file records tests conducted during the development of the graph-based rout
 | T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
 | T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | 17 Nov 2026 | PASS |
 | T06c | Break-even analysis: Lyon to Zurich | Verify the route-switching point against the hand calculation of approximately £13.69/hour | - | Not tested |
+| T06d | Symmetry of route costs | All 45 unordered city pairs agree within £0.01 across five λ values | 225 comparisons; 0 failures after floating-point tolerance correction | PASS | 18 Nov 2026 |
+| T06 | Monotonicity of generalised costs | Minimum cost for every ordered city pair does not decrease as λ increases | 360 comparisons; 0 failures | PASS | 18 Nov 2026 |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
@@ -438,4 +440,18 @@ where:
 - λ = value of time (£ per hour)
 - T = journey time (hours)
 
-Journey time (T) is non-negative. Increasing λ cannot make the cost of an individual route decrease. Consequently, the minimum cost across all available routes cannot decrease either.
+Journey time (T) is non-negative. Increasing λ cannot decrease the cost of an individual route. Consequently, the minimum cost across all available routes cannot decrease either.
+
+### T06d — Symmetry test results
+- Initial run: 225 comparisons, 1 flagged failure.
+- Maximum difference: 0.01000000000000512.
+- Cause: floating-point representation made a one-penny difference marginally exceed the 0.01 threshold.
+- Corrected run: 225 comparisons, 0 failures.
+- Correction: tolerance adjusted to 0.01 + 1e-9.
+- Status: PASS.
+  
+### T06e — Monotonicity test results
+- Comparisons: 360.
+- Failures: 0.
+- Status: PASS.
+- Result: Minimum generalised cost did not decrease as λ increased across the five scenarios.
