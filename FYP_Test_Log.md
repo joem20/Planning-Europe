@@ -414,3 +414,28 @@ At λ = £0, journey time has no value, and there is no interchange penalty in t
 **Result: PASS.** The full-network sensitivity analysis completed all 450 route calculations. The results showed changes in route selection across the five lambda values and identified differences in the frequency of selected transport links.
 
 **Evidence:**  Output from the T06b sensitivity analysis and link-frequency cells in Graph_Construction.ipynb. Notebook commit: 11e2beb.
+
+**Date:** 18 November 2026
+
+### T06d — Symmetry test
+
+Expected outcome:
+All 45 unordered city pairs will have matching generalised costs in both directions (A → B and B → A), within £0.01, across all five λ values (0, 5, 10, 20 and 30).
+
+The graph is undirected, and each transport link has the same price and journey time in both directions. Therefore, the minimum generalised cost should also be the same in both directions. This test does not validate the assumption that real fares and times are equal in both directions; this remains a stated limitation.
+
+### T06e — Monotonicity test
+
+Expected outcome: 
+For every ordered city pair, the minimum generalised cost will not decrease as λ increases from £0 to £30 per hour across the five tested scenarios.
+The formula is:
+
+**C = P + λ × T**
+
+where:
+- C = generalised cost (£)
+- P = ticket price (£)
+- λ = value of time (£ per hour)
+- T = journey time (hours)
+
+Journey time (T) is non-negative. Increasing λ cannot make the cost of an individual route decrease. Consequently, the minimum cost across all available routes cannot decrease either.
