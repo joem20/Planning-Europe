@@ -16,6 +16,13 @@
 | D11 | 14 Nov 2026 | Created public GitHub repo `joem20/Planning-Europe`; froze Dataset v1 as tag `dataset-v1` (commit `7a13a8c`); notebook loads the CSV from the tag. | Reproducibility required by the brief. | Release page, notebook |
 | D12 | 14 Nov 2026 | Built an undirected weighted MultiGraph containing 10 city nodes and 27 transport edges. Confirmed that the graph is connected. | A MultiGraph supports multiple transport options between the same city pairs. The connected network provides the foundation for route-finding algorithms. | Graph_Construction.ipynb |
 | D13 | 16 Nov 2026 | Own Dijkstra validated against NetworkX (450 comparisons, no mismatches) | To check the reliability of my own implementation across five lambda values and all 90 ordered city pairs. | T03 results in Graph_Construction.ipynb; 450 matches, 0 mismatches. |
+| D14 | 15 Nov 2026 | Negative λ is rejected with an error | Dijkstra needs non-negative costs; follows the supervisor's 11 Nov feedback (D08). | T08 in the test log |
+| D15 | 17 Nov 2026 | λ tested at 0, 5, 10, 20 and 30 pounds per hour; λ = 0 treated as a limiting case | Time is free at 0, which produces long chains of coaches, so most analysis uses λ from 5. The range still needs a cited source. | T06 and T06b in the test log |
+| D16 | 18 Nov 2026 | Symmetry test compares costs with a tolerance of 0.01 + 1e-9 | The first run flagged one pair because a one-penny rounding difference exceeded 0.01 in floating point. The failed run is kept in the log. | T06d in the test log |
+| D17 | 19 Nov 2026 | Weather not pursued; recorded as future work | It was part of my initial idea (whole of Europe, cost, journey time and weather). At our first meeting, the supervisor advised that this was too big, and it was dropped before my first proposal. The ten cities also have broadly similar winter weather. | Supervision log |
+| D18 | 19 Nov 2026 | Supervisor accepted the 30-minute interchange allowance (confirms D08) | The expanded model with state (city, incoming service) goes ahead. It simplifies the pure transfer penalty. | Supervision log, 19 Nov |
+| D19 | 19 Nov 2026 | Links stay undirected (confirms D07); no full reverse-direction dataset | Supervisor accepted the limitation. A full reverse collection would repeat the whole dataset, and fares change over time. An optional sample check, both directions in one session, is planned if time allows. | Supervision log, 19 Nov |
+| D20 | 19 Nov 2026 | Research gaps and the state of the art, using AI-assisted search with sources checked by me | Supervisor advised it on 19 Nov. I checked each source, and I wrote the Dijkstra and test code myself. | Literature notes, AI-use entry |
 
 
 
