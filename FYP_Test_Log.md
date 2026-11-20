@@ -149,7 +149,7 @@ After the test, the graph's generalised costs were reset to λ = 10 for subseque
 - Destination node: D
 - A–B cost: 4
 - B–C cost: 3
-- D added as an isolated node with no connections.
+- D is added as an isolated node with no connections.
 
 **Expected result:** Dijkstra should return infinity for D, without raising an error.
 
@@ -455,3 +455,31 @@ Journey time (T) is non-negative. Increasing λ cannot decrease the cost of an i
 - Failures: 0.
 - Status: PASS.
 - Result: Minimum generalised cost did not decrease as λ increased across the five scenarios.
+  
+### T10 – Starting city equals destination
+
+**Status:** PASS (20 Nov 2026)
+
+**Purpose:** To verify that Dijkstra and `rebuild_route()` correctly handle a journey where the starting city and destination are the same.
+
+**Prediction (written 20 Nov 2026, about 07:30, before the run):** cost 0, route containing only the starting city, no links, for London and Zurich.
+
+**Test procedure:** Dijkstra was run for London → London and Zurich → Zurich. The generalised cost, the `previous` dictionary and the route rebuilt by `rebuild_route()` were checked with assertions.
+
+**Expected result**
+
+- Generalised cost is 0.
+- The start city does not appear in `previous`.
+- The reconstructed route contains only the starting city.
+- The list of transport links is empty.
+
+**Actual result**
+
+| Test case | Cost | Route | Links |
+| --- | --- | --- | --- |
+| London → London | 0 | ['London'] | [] |
+| Zurich → Zurich | 0 | ['Zurich'] | [] |
+
+**Conclusion:** Both cases passed all four assertions. This confirms the system handles a journey with identical origin and destination.
+
+**Evidence:** `Graph_Construction.ipynb`, notebook commit [add hash].
