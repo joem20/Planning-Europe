@@ -22,7 +22,7 @@
 | D17 | 19 Nov 2026 | Weather not pursued; recorded as future work | It was part of my initial idea (whole of Europe, cost, journey time and weather). At our first meeting, the supervisor advised that this was too big, and it was dropped before my first proposal. The ten cities also have broadly similar winter weather. | Supervision log |
 | D18 | 19 Nov 2026 | Supervisor accepted the 30-minute interchange allowance (confirms D08) | The expanded model with state (city, incoming service) goes ahead. It simplifies the pure transfer penalty. | Supervision log, 19 Nov |
 | D19 | 19 Nov 2026 | Links stay undirected (confirms D07); no full reverse-direction dataset | Supervisor accepted the limitation. A full reverse collection would repeat the whole dataset, and fares change over time. An optional sample check, both directions in one session, is planned if time allows. | Supervision log, 19 Nov |
-| D20 | 19 Nov 2026 | Research gaps and the state of the art, using AI-assisted search with sources checked by me | Supervisor advised it on 19 Nov. I checked each source, and I wrote the Dijkstra and test code myself. | Literature notes, AI-use entry |
+| D20 | 19 Nov 2026 | Research gaps and the state of the art, using AI-assisted search with sources checked by me | Supervisor advised it on 19 Nov. I will check each source before using it, and I wrote the Dijkstra and test code myself. | Literature notes, AI-use entry |
 
 
 
