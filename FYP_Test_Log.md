@@ -485,3 +485,39 @@ Journey time (T) is non-negative. Increasing λ cannot decrease the cost of an i
 **Conclusion:** Both cases passed all four assertions. This confirms the system handles a journey with identical origin and destination.
 
 **Evidence:** `Graph_Construction.ipynb`, notebook commit eb4c65a.
+### T07a – State-based Dijkstra on tiny test graph (interchange penalty)
+
+**Date written:** Fri 20 Nov 2026, 21:01 (before any code)
+
+**Aim:** Check that the state-based Dijkstra (state = (city, incoming_link_id)) applies the penalty λ × 0.5 h on each service change, and not at the origin.
+
+**Test graph (not Dataset v1):**
+| Link | From → To | Price (£) | Time (h) |
+|---|---|---|---|
+| T1 | A → B | 20 | 2.0 |
+| T2 | B → C | 20 | 2.0 |
+| T3 | A → C | 42 | 4.2 |
+
+**Prediction before testing (hand calculation, λ = 10):**
+- A → B → C without penalty: 20 + 20 + 10 × 4.0 = 80
+- Penalty for one change at B: 10 × 0.5 = 5
+- A → B → C with penalty: 85
+- A → C direct: 42 + 10 × 4.2 = 84
+- Expected result: A → C direct wins (84 < 85). Without the penalty, A → B → C would win (80 < 84).
+
+**Prediction (λ = 0):** the penalty is 0. A → B → C costs 40 and wins over direct (42). Links ['T1', 'T2'].
+
+**Prediction (A → A):** returns (0, ['A'], []).
+
+**Expected outcome:**
+| Case | Cost | Cities | Links |
+|---|---|---|---|
+| λ = 10, A → C | 84 | A, C | ['T3'] |
+| λ = 0, A → C | 40 | A, B, C | ['T1', 'T2'] |
+| λ = 10, A → A | 0 | A | [] |
+
+**Actual result:** *(to be completed after running)*
+
+**Status:** Not tested
+
+**Evidence (commit hash):** *(add after commit)*
