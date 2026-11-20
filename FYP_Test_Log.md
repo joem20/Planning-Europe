@@ -482,4 +482,4 @@ Journey time (T) is non-negative. Increasing λ cannot decrease the cost of an i
 
 **Conclusion:** Both cases passed all four assertions. This confirms the system handles a journey with identical origin and destination.
 
-**Evidence:** `Graph_Construction.ipynb`, notebook commit [add hash].
+**Evidence:** `Graph_Construction.ipynb`, notebook commit eb4c65a.
