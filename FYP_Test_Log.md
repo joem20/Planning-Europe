@@ -13,13 +13,13 @@ This file records tests conducted during the development of the graph-based rout
 | T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
 | T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
 | T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | 17 Nov 2026 | PASS |
-| T06c | Break-even analysis: Lyon to Zurich | Verify the route-switching point against the hand calculation of approximately £13.69/hour | - | Not tested |
+| T06c | Break-even analysis: Lyon to Zurich | Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).| 20 Nov 2026 | in progress|
 | T06d | Symmetry of route costs | All 45 unordered city pairs agree within £0.01 across five λ values | 18 Nov 2026 | PASS |
 | T06e | Monotonicity of generalised costs | Minimum cost for every ordered city pair does not decrease as λ increases | 18 Nov 2026 | PASS |
 | T07 | Interchange penalty | Correct 30-minute penalty applied when changing services | — | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
-| T10 | Starting city equals destination | Returns generalised cost 0 | – | Not tested |
+| T10 | Starting city equals destination | cost 0, route [start], no links, for London and Zurich | 20 Nov 2026 | PASS |
 
 
 ## T01 – Basic Dijkstra test: London to Paris
