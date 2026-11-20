@@ -11,6 +11,7 @@ This file records tests conducted during the development of the graph-based rout
 | T03 | Full comparison of own Dijkstra with NetworkX: 5 lambda values and 90 ordered city pairs | 450/450 matches, 0 mismatches | 16 Nov 2026 | PASS |
 | T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | 15 Nov 2026 | PASS |
 | T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
+| T05b | `rebuild_route()` on an unreachable destination (city D) | Raises `ValueError` | – | Not tested |
 | T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
 | T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | 17 Nov 2026 | PASS |
 | T06c | Break-even analysis: Lyon to Zurich | Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).| 20 Nov 2026 | in progress|
@@ -20,6 +21,7 @@ This file records tests conducted during the development of the graph-based rout
 | T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
 | T10 | Starting city equals destination | cost 0, route [start], no links, for London and Zurich | 20 Nov 2026 | PASS |
+| T11 | Regression check: replace inline route-rebuilding loops in T02, T06 and T06b with `rebuild_route()` and rerun | Routes and costs identical to the earlier runs | – | Not tested |
 
 
 ## T01 – Basic Dijkstra test: London to Paris
