@@ -563,11 +563,6 @@ The cost gap at 0.01 either side of λ* should be 3.366 × 0.01 = £0.03366 in e
 
 **At λ\*:** the result is not checked for which route wins, because the two costs are equal and the choice depends on tie-breaking and floating-point rounding.
 
-**Actual result:** *(to be completed after running)*
-
-**Status:** In progress
-
-**Evidence (commit hash):** *(add after commit)*
 **Actual result – first run (Sat 21 Nov 2026, 15:36):**
 | λ (£/hour) | Dijkstra cost (£) | Cities | Links |
 |---|---|---|---|
@@ -575,18 +570,19 @@ The cost gap at 0.01 either side of λ* should be 3.366 × 0.01 = £0.03366 in e
 | 13.699840 (λ* + 0.01) | 178.93903743 | Lyon, Paris, Zurich | ['L06', 'L14'] |
 | 13.689840 (λ*) | 178.87903743 | Lyon, Paris, Zurich | ['L06', 'L14'] |
 
-**Comparison with prediction:** The winning routes and links matched on both sides of the break-even: Milan below, Paris above. The costs differed from the hand-calculated figures by about 4.0 × 10⁻⁶ (Milan) and 2.6 × 10⁻⁶ (Paris). The hand calculation used the rounded break-even (13.68984), and the code used the unrounded value (about 13.6898396), so each λ in the code was lower by about 4.3 × 10⁻⁷; multiplied by each route's time, this accounts for the differences. This is a rounding difference in my prediction, not a fault in the code.
+**Comparison with prediction:** The winning routes and links matched on both sides of the break-even: Milan below, Paris above. The costs differed from the hand-calculated figures by about 4.0 × 10⁻⁶ (Milan) and 2.6 × 10⁻⁶ (Paris). The hand calculation used the rounded break-even (13.68984), and the code used the unrounded value (about 13.6898396), so each λ in the code was lower by about 4.3 × 10⁻⁷; multiplied by each route's time, this accounts for the differences. This was a rounding difference in my prediction, not a fault in the code.
 
-**At λ\*:** the route returned at the tie point is not treated as a pass or fail, because the two routes cost the same. At λ\*, the check is that the Dijkstra cost equals both route costs within 1e-9. 
-
-**Assertion run (Sat 21 Nov 2026, 15:47):** An assertion cell compared the Dijkstra output with expected values computed from the stored route totals and the unrounded break-even λ* (13.6898396…), using a tolerance of 1e-9:
+**Assertion run (Sat 21 Nov 2026, 15:47):** An assertion cell compared the Dijkstra output with expected values computed from the stored route totals and the unrounded break-even λ*, using a tolerance of 1e-9:
 - λ* − 0.01: links ['L24', 'L15'] (Milan), cost matches the Milan formula.
 - λ* + 0.01: links ['L06', 'L14'] (Paris), cost matches the Paris formula.
 - λ*: Milan and Paris costs are equal, and the Dijkstra cost equals both.
 
 All assertions passed.
 
-**Sanity check:** with one expected value deliberately changed, the assertion raised `AssertionError`; it was changed back, and the clean run above was repeated.
+**Sanity check (Sat 21 Nov 2026, 16:04):** The Milan-section assertion (below break-even) was deliberately changed to expect the Paris links ['L06', 'L14']. The cell raised an `AssertionError` on that line, so the test can fail. An earlier attempt had passed because the wrong line had been edited, and it was repeated correctly. The line was restored, and the clean rerun (16:06) passed: all assertions passed.
+
+**Note on process:** my first-hand calculations contained two arithmetic slips (a wrong Milan price, 50.634 instead of 50.66, and an addition error). I found them by checking that the cost gaps on either side of λ* should be equal. The predictions above are the corrected figures, written before any test code was run.
+
 **Status:** PASS
 
-**Evidence (commit hash):** *(add after commit)*
+**Evidence (commit hash):** Notebook commit 6eff1f1; test log commit *(add after commit)*
