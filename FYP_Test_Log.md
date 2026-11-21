@@ -585,4 +585,4 @@ All assertions passed.
 
 **Status:** PASS
 
-**Evidence (commit hash):** Notebook commit 6eff1f1; test log commit *(add after commit)*
+**Evidence (commit hash):** Notebook commits 6eff1f1 (assertions pass) and f34a985 (after the sanity check and clean rerun)
