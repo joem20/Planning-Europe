@@ -14,7 +14,7 @@ This file records tests conducted during the development of the graph-based rout
 | T05b | `rebuild_route()` on an unreachable destination (city D) | Raises `ValueError` | – | Not tested |
 | T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
 | T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | 17 Nov 2026 | PASS |
-| T06c | Break-even analysis: Lyon to Zurich | Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).| 20 Nov 2026 | in progress|
+| T06c | Break-even analysis: Lyon to Zurich | Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).| 20 Nov 2026 | PASS|
 | T06d | Symmetry of route costs | All 45 unordered city pairs agree within £0.01 across five λ values | 18 Nov 2026 | PASS |
 | T06e | Monotonicity of generalised costs | Minimum cost for every ordered city pair does not decrease as λ increases | 18 Nov 2026 | PASS |
 | T07a | State-based Dijkstra on tiny test graph (A–B–C): interchange penalty applied at a service change, not at the origin | λ = 10: A→C direct, cost 84, links ['T3']. λ = 0: A→B→C, cost 40, links ['T1', 'T2']. A→A: cost 0, route ['A'], links [] | 21 Nov 2026 | PASS |
@@ -566,5 +566,27 @@ The cost gap at 0.01 either side of λ* should be 3.366 × 0.01 = £0.03366 in e
 **Actual result:** *(to be completed after running)*
 
 **Status:** In progress
+
+**Evidence (commit hash):** *(add after commit)*
+**Actual result – first run (Sat 21 Nov 2026, 15:36):**
+| λ (£/hour) | Dijkstra cost (£) | Cities | Links |
+|---|---|---|---|
+| 13.679840 (λ* − 0.01) | 178.78537743 | Lyon, Milan, Zurich | ['L24', 'L15'] |
+| 13.699840 (λ* + 0.01) | 178.93903743 | Lyon, Paris, Zurich | ['L06', 'L14'] |
+| 13.689840 (λ*) | 178.87903743 | Lyon, Paris, Zurich | ['L06', 'L14'] |
+
+**Comparison with prediction:** The winning routes and links matched on both sides of the break-even: Milan below, Paris above. The costs differed from the hand-calculated figures by about 4.0 × 10⁻⁶ (Milan) and 2.6 × 10⁻⁶ (Paris). The hand calculation used the rounded break-even (13.68984), and the code used the unrounded value (about 13.6898396), so each λ in the code was lower by about 4.3 × 10⁻⁷; multiplied by each route's time, this accounts for the differences. This is a rounding difference in my prediction, not a fault in the code.
+
+**At λ\*:** the route returned at the tie point is not treated as a pass or fail, because the two routes cost the same. At λ\*, the check is that the Dijkstra cost equals both route costs within 1e-9. 
+
+**Assertion run (Sat 21 Nov 2026, 15:47):** An assertion cell compared the Dijkstra output with expected values computed from the stored route totals and the unrounded break-even λ* (13.6898396…), using a tolerance of 1e-9:
+- λ* − 0.01: links ['L24', 'L15'] (Milan), cost matches the Milan formula.
+- λ* + 0.01: links ['L06', 'L14'] (Paris), cost matches the Paris formula.
+- λ*: Milan and Paris costs are equal, and the Dijkstra cost equals both.
+
+All assertions passed.
+
+**Sanity check:** with one expected value deliberately changed, the assertion raised `AssertionError`; it was changed back, and the clean run above was repeated.
+**Status:** PASS
 
 **Evidence (commit hash):** *(add after commit)*
