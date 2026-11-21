@@ -22,7 +22,7 @@ This file records tests conducted during the development of the graph-based rout
 | T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
 | T10 | Starting city equals destination | cost 0, route [start], no links, for London and Zurich | 20 Nov 2026 | PASS |
-| T11 | Regression check: replace inline route-rebuilding loops in T02, T06 and T06b with `rebuild_route()` and rerun | Routes and costs identical to the earlier runs | – | Not tested |
+| T11 | Regression check: replace inline route-rebuilding loops in T02, T06 and T06b with `rebuild_route()` and rerun | Routes and costs identical to the earlier runs | 21 Nov 2026 | PASS |
 
 
 ## T01 – Basic Dijkstra test: London to Paris
@@ -633,6 +633,6 @@ All results matched the predictions written before any code was changed.
 
 **Notes:** `rebuild_route()` was already defined directly after `dijkstra()`, so no cells were moved. The original T06b cell and its results were left unchanged, and the refactored version wrote to a separate list.
 
-**Status:** PASS (with the limitation above)
+**Status:** PASS 
 
 **Evidence:** Notebook commit 8da3e92; test log commit f398019
