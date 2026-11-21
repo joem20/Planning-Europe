@@ -613,4 +613,26 @@ All assertions passed.
 
 **Method:** new cells use `rebuild_route()` and write to new variables. Results are compared with the baseline entry by entry. The original cells are left unchanged until the comparison passes.
 
-**Status:** Not tested
+**Actual result (Sat 21 Nov 2026):**
+| Check | Time | Result |
+|---|---|---|
+| Baseline saved: `sensitivity_results_original`, `results_lookup_original` | 18:37 | 450 entries each; first entry Amsterdam → Berlin, ('L20',), £24.49 |
+| Reproducibility: original T06b loop rerun in the same session, compared with baseline | 19:39 | 450 / 450 entries, 0 differences |
+| T06b refactored with `rebuild_route()`, compared with baseline (lambda, source, target, links, cost) | 19:58 | 450 / 450 entries, 0 differences; assertion passed |
+| T06b top-ten link counts at λ = 0, 5, 10, 20, 30 | 20:14 | Identical at all five λ values |
+| T02 with `rebuild_route()` | 20:20 | Lyon → Milan → Zurich, ['L24', 'L15'], £144.32 |
+| T06 (Lyon–Zurich, five λ values) with `rebuild_route()` | 20:24 | All five results matched the prediction table |
+| Structural validation of all 450 city sequences | 20:26 | 0 invalid |
+
+All results matched the predictions written before any code was changed.
+
+**Sanity checks:**
+- The comparison's assertion was temporarily changed from `== 0` to `== 1` and raised `AssertionError`, which shows the assertion fires; it does not show the comparison can detect a difference.
+- A deliberately corrupted city sequence in a scratch copy (first route's start city replaced with "WrongCity") was reported as 1 invalid sequence out of 450 by the structural validation check.
+- The baseline comparison was not separately tested with a deliberately altered result, because the corrupted-city test does not exercise it (the comparison checks links and cost, not city sequences). This is a limitation of the evidence.
+
+**Notes:** `rebuild_route()` was already defined directly after `dijkstra()`, so no cells were moved. The original T06b cell and its results were left unchanged, and the refactored version wrote to a separate list.
+
+**Status:** PASS (with the limitation above)
+
+**Evidence (commit hash):** Notebook commit *(add after commit)*; test log commit *(add after commit)*
