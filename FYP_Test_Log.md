@@ -17,7 +17,7 @@ This file records tests conducted during the development of the graph-based rout
 | T06c | Break-even analysis: Lyon to Zurich | Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).| 20 Nov 2026 | in progress|
 | T06d | Symmetry of route costs | All 45 unordered city pairs agree within £0.01 across five λ values | 18 Nov 2026 | PASS |
 | T06e | Monotonicity of generalised costs | Minimum cost for every ordered city pair does not decrease as λ increases | 18 Nov 2026 | PASS |
-| T07a | State-based Dijkstra on tiny test graph (A–B–C): interchange penalty applied at a service change, not at the origin | λ = 10: A→C direct, cost 84, links ['T3']. λ = 0: A→B→C, cost 40, links ['T1', 'T2']. A→A: cost 0, route ['A'], links [] | – | Not tested |
+| T07a | State-based Dijkstra on tiny test graph (A–B–C): interchange penalty applied at a service change, not at the origin | λ = 10: A→C direct, cost 84, links ['T3']. λ = 0: A→B→C, cost 40, links ['T1', 'T2']. A→A: cost 0, route ['A'], links [] | 21 Nov 2026 | PASS |
 | T07 | State-based Dijkstra on Dataset v1: 30-minute interchange penalty (λ × 0.5 h) applied correctly at each service change | State-based result matches brute-force enumeration of simple paths with penalty λ × 0.5 × (links − 1), on a sample of city pairs and λ values | – | Not tested |
 | T08 | Negative lambda validation | Negative λ raises ValueError | 15 Nov 2026 | PASS |
 | T09 | Small graph: A–B–C–D | Minimum cost 8 via A→C→B→D | 15 Nov 2026 | PASS |
@@ -517,12 +517,21 @@ Journey time (T) is non-negative. Increasing λ cannot decrease the cost of an i
 | λ = 0, A → C | 40 | A, B, C | ['T1', 'T2'] |
 | λ = 10, A → A | 0 | A | [] |
 
-**Actual result:** *(to be completed after running)*
+**Pre-check (Fri 20 Nov, 22:29):**
 
-**Status:** Not tested
+Test graph built and set_generalised_costs(G_test, 10) run. Link costs T1 = 40.0, T2 = 40.0, T3 = 84.0, matching hand calculation. The first run raised NameError because the graph-building cell had not been run in that session; I ran the cells in order, and it passed. (T07a itself is still Not tested.)
+
+**Actual result (Sat 21 Nov 2026, 13:56):**
+| Case | Cost | Cities | Links |
+|---|---|---|---|
+| λ = 10, A → C | 84.0 | A, C | ['T3'] |
+| λ = 0, A → C | 40.0 | A, B, C | ['T1', 'T2'] |
+| λ = 10, A → A | 0 | A | [] |
+
+All three matched the predictions written before coding. `set_generalised_costs` was rerun with the matching λ before each case, because the function reads the stored generalised costs.
+
+**Sanity check:** with the penalty set to 0 in a scratch copy, Test 1 returned A→B→C at 80.0, so the test detects a missing penalty.
+
+**Status:** PASS (tiny graph only; Dataset v1 is covered by T07)
 
 **Evidence (commit hash):** *(add after commit)*
-
-** Pre-check (Fri 20 Nov, 22:29): **
-
-Test graph built and set_generalised_costs(G_test, 10) run. Link costs T1 = 40.0, T2 = 40.0, T3 = 84.0, matching hand calculation. The first run raised NameError because the graph-building cell had not been run in that session; I ran the cells in order and it passed. (T07a itself is still Not tested.)
