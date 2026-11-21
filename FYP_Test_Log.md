@@ -534,4 +534,4 @@ All three matched the predictions written before coding. `set_generalised_costs`
 
 **Status:** PASS (tiny graph only; Dataset v1 is covered by T07)
 
-**Evidence (commit hash):** *(add after commit)*
+**Evidence:** Test log commit f894571; code in notebook commit 1c73613
