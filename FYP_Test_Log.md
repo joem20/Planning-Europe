@@ -586,3 +586,31 @@ All assertions passed.
 **Status:** PASS
 
 **Evidence (commit hash):** Notebook commits 6eff1f1 (assertions pass) and f34a985 (after the sanity check and clean rerun)
+### T11 – Regression check: replace inline route-rebuilding loops with rebuild_route()
+
+**Date written:** Sat 21 Nov 2026, 18:25 (before any code changes)
+
+**Aim:** After replacing the inline route-rebuilding loops in T02, T06 and T06b with `rebuild_route()`, routes and costs are identical to the earlier runs.
+
+**Baseline:** a deep copy of `sensitivity_results` (450 entries) taken before any change, plus the T02 and T06 results recorded in this log.
+
+**Prediction before testing:**
+| Test | Expected result after the change |
+|---|---|
+| T02 | Lyon → Milan → Zurich, links L24 + L15, cost £144.32 |
+| T06 | Same five results as the original T06 test (table below) |
+| T06b | 450 of 450 entries identical to the baseline (route links and cost to 2 dp): 0 differences |
+| T06b link counts | Identical top-ten link counts at λ = 0, 5, 10, 20 and 30 |
+
+**T06 expected results (Lyon to Zurich):**
+| λ (£/hour) | Expected route | Links | Cost |
+|---|---|---|---|
+| 0 | Lyon → Milan → Zurich | L24 + L15 | £50.66 |
+| 5 | Lyon → Milan → Zurich | L24 + L15 | £97.49 |
+| 10 | Lyon → Milan → Zurich | L24 + L15 | £144.32 |
+| 20 | Lyon → Paris → Zurich | L06 + L14 | £216.74 |
+| 30 | Lyon → Paris → Zurich | L06 + L14 | £276.74 |
+
+**Method:** new cells use `rebuild_route()` and write to new variables. Results are compared with the baseline entry by entry. The original cells are left unchanged until the comparison passes.
+
+**Status:** Not tested
