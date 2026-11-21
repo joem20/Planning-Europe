@@ -536,3 +536,35 @@ All three matched the predictions written before coding. `set_generalised_costs`
 
 **Evidence:** Test log commit 
 7ba26b2 code in notebook commit 1c73613
+### T06c – Break-even analysis: Lyon to Zurich
+
+**Date written:** Sat 21 Nov 2026 (predictions worked out about 15:23, before the test code)
+
+**Aim:** Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).
+
+**Candidate routes (stored values):**
+| Route | Links | Price (£) | Time (h) |
+|---|---|---|---|
+| Via Milan | L24 + L15 | 50.66 | 9.366 |
+| Via Paris | L06 + L14 | 96.74 | 6.000 |
+
+**Hand-calculated break-even:** λ* = (96.74 − 50.66) / (9.366 − 6.000) = 46.08 / 3.366 ≈ £13.68984 per hour.
+
+**Prediction before testing:**
+| λ | Milan cost (£) | Paris cost (£) | Expected winner | Expected links |
+|---|---|---|---|---|
+| λ* − 0.01 (13.67984) | 178.78538144 | 178.81904 | Milan | L24, L15 |
+| λ* + 0.01 (13.69984) | 178.97270144 | 178.93904 | Paris | L06, L14 |
+| λ* | equal | equal | no winner predicted | Dijkstra cost equals both route costs within 1e-9 |
+
+The cost gap at 0.01 either side of λ* should be 3.366 × 0.01 = £0.03366 in each direction.
+
+**Note on process:** my first-hand calculations contained two arithmetic slips (a wrong Milan price, 50.634 instead of 50.66, and an addition error). I found them by checking that the gaps on either side of λ* should be equal. The figures above are the corrected ones.
+
+**At λ\*:** the result is not checked for which route wins, because the two costs are equal and the choice depends on tie-breaking and floating-point rounding.
+
+**Actual result:** *(to be completed after running)*
+
+**Status:** In progress
+
+**Evidence (commit hash):** *(add after commit)*
