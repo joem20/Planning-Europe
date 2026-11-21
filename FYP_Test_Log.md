@@ -585,7 +585,7 @@ All assertions passed.
 
 **Status:** PASS
 
-**Evidence (commit hash):** Notebook commits 6eff1f1 (assertions pass) and f34a985 (after the sanity check and clean rerun)
+**Evidence** Notebook commits 6eff1f1 (assertions pass) and f34a985 (after the sanity check and clean rerun)
 ### T11 – Regression check: replace inline route-rebuilding loops with rebuild_route()
 
 **Date written:** Sat 21 Nov 2026, 18:25 (before any code changes)
@@ -635,4 +635,4 @@ All results matched the predictions written before any code was changed.
 
 **Status:** PASS (with the limitation above)
 
-**Evidence (commit hash):** Notebook commit *(add after commit)*; test log commit *(add after commit)*
+**Evidence:** Notebook commit 8da3e92; test log commit f398019
