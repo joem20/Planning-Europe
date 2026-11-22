@@ -651,7 +651,7 @@ All results matched the predictions written before any code was changed.
 
 **Failure conditions:** `rebuild_route()` returns an empty or incorrect route, does not raise the expected `ValueError`, or raises an unrelated error.
 
-**Can-it-fail check:** Deliberately use the incorrect expectation that no error is raised. The resulting failed assertion should show that the test detects the `ValueError`. This checks the test's ability to detect an unexpected outcome. It does not independently prove that the guard works correctly or that an incorrect route would be detected.
+**Can-it-fail check:** Deliberately use the incorrect expectation that no error is raised. The resulting failed assertion should show that the test detects the `ValueError`. This checks the test's ability to detect an unexpected outcome. It does not independently prove that the guard works correctly or that it would detect an incorrect route.
 
 **Result:** PASS (Sun 22 Nov 2026, about 20:20)
 
@@ -671,4 +671,5 @@ All results matched the predictions written before any code was changed.
 
 **Limitation:** Tested on a 3-city scratch graph with one isolated city and the original `dijkstra` only. `dijkstra_with_transfers` and the real Dataset v1 are not covered by this test.
 
-**Evidence:** Prediction commit 79f8d70; notebook commit ab16fb5 and test log commit added after committing.
+**Evidence:** Prediction commit 79f8d70; notebook commit ab16fb5 and test log commit fc22d2d
+
