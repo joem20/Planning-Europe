@@ -636,3 +636,21 @@ All results matched the predictions written before any code was changed.
 **Status:** PASS 
 
 **Evidence:** Notebook commit 8da3e92; test log commit f398019
+### T05b: Isolated city (unreachable destination)
+
+**Prediction written (before running any code):** Sun 22 Nov 2026, 19:36
+
+**Setup:** The original `dijkstra` (not `dijkstra_with_transfers`) is run on a scratch copy of `G_test` with an isolated node D added (no links). Dataset v1 is not touched.
+
+**Prediction:**
+1. `dijkstra(G_scratch, "A", "D")` returns the `distances` and `previous` dictionaries.
+2. `distances["D"]` remains `float("inf")`, because D is unreachable.
+3. `previous` is initialised as an empty dictionary and only receives entries when a cheaper route is found, so D is absent from `previous`.
+4. Calling `rebuild_route(previous, "A", "D")` raises `ValueError` with the exact message `Destination is unreachable` (checked against the code in `rebuild_route`, no full stop).
+5. The guard expected to trigger is `if current not in previous:`.
+
+**Failure conditions:** `rebuild_route()` returns an empty or incorrect route, does not raise the expected `ValueError`, or raises an unrelated error.
+
+**Can-it-fail check:** Deliberately use the incorrect expectation that no error is raised. The resulting failed assertion should show that the test detects the `ValueError`. This checks the test's ability to detect an unexpected outcome. It does not independently prove that the guard works correctly or that an incorrect route would be detected.
+
+**Evidence (commit hash):** Prediction commit: *(add after committing)*
