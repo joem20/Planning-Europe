@@ -653,4 +653,22 @@ All results matched the predictions written before any code was changed.
 
 **Can-it-fail check:** Deliberately use the incorrect expectation that no error is raised. The resulting failed assertion should show that the test detects the `ValueError`. This checks the test's ability to detect an unexpected outcome. It does not independently prove that the guard works correctly or that an incorrect route would be detected.
 
-**Evidence (commit hash):** Prediction commit: *(add after committing)*
+**Result:** PASS (Sun 22 Nov 2026, about 20:20)
+
+**Setup notes (found while writing the test, not in the committed prediction):**
+- First run of `dijkstra` raised `KeyError: 'generalised_cost'`, because `G_test` only stores `price_gbp` and `time_hours` and `dijkstra` reads the stored cost. This was a setup slip, not a test result. `set_generalised_costs(G_scratch, 10)` was added before `dijkstra`, with λ = 10. D has no links, so λ cannot change the expected outcome.
+- The scratch graph was created with `G_test.copy()` and D added with `add_node("D")`. Checked: scratch cities A, B, C, D; 3 links; original `G_test` still A, B, C.
+
+**Observed:**
+1. `dijkstra(G_scratch, "A", "D")` returned both dictionaries without error.
+2. `distances["D"]` = `inf`.
+3. `"D" in previous_scratch` = `False`.
+4. `rebuild_route(previous_scratch, "A", "D")` raised `ValueError` with the message `Destination is unreachable`.
+
+**Prediction 5 (guard line):** consistent with the `if current not in previous` guard. The line that fired was not observed separately; it is inferred from the matching exception type and message.
+
+**Can-it-fail Result:** The same call was run with the wrong expectation (no error raised). It failed with `AssertionError: Expected no error but got ValueError`, so the test can detect the `ValueError`. This does not prove the guard is correct, or that a wrong route would be detected.
+
+**Limitation:** Tested on a 3-city scratch graph with one isolated city and the original `dijkstra` only. `dijkstra_with_transfers` and the real Dataset v1 are not covered by this test.
+
+**Evidence:** Prediction commit 79f8d70; notebook commit ab16fb5 and test log commit added after committing.
