@@ -11,7 +11,7 @@ This file records tests conducted during the development of the graph-based rout
 | T03 | Full comparison of own Dijkstra with NetworkX: 5 lambda values and 90 ordered city pairs | 450/450 matches, 0 mismatches | 16 Nov 2026 | PASS |
 | T04 | London to Paris, λ = 0 | FlixBus L16 selected, cost £28.49 | 15 Nov 2026 | PASS |
 | T05 | Unreachable destination | D exists in graph but is disconnected; Dijkstra returns infinity | 15 Nov 2026 | PASS |
-| T05b | `rebuild_route()` on an unreachable destination (city D) | Raises `ValueError` | 21 Nov 2026 | PASS |
+| T05b | `rebuild_route()` on an unreachable destination (city D) | Raises `ValueError` | 22 Nov 2026 | PASS |
 | T06 | Lyon–Zurich lambda sensitivity: £0, £5, £10, £20 and £30 |Milan (L24, L15) at λ = 0, 5, 10; Paris (L06, L14) at 20, 30; all costs matched prediction.| 17 Nov 2026 | PASS |
 | T06b | Full-network lambda sensitivity: 90 ordered city pairs across five lambda values | Record route, cost and winning service changes across 450 calculations | 17 Nov 2026 | PASS |
 | T06c | Break-even analysis: Lyon to Zurich | Verify that my Dijkstra switches from the Milan route to the Paris route at the hand-calculated break-even (about £13.69/hour).| 20 Nov 2026 | PASS|
@@ -667,7 +667,7 @@ All results matched the predictions written before any code was changed.
 
 **Prediction 5 (guard line):** consistent with the `if current not in previous` guard. The line that fired was not observed separately; it is inferred from the matching exception type and message.
 
-**Can-it-fail Result:** The same call was run with the wrong expectation (no error raised). It failed with `AssertionError: Expected no error but got ValueError`, so the test can detect the `ValueError`. This does not prove the guard is correct, or that a wrong route would be detected.
+**Can-it-fail result:** The same call was run with the wrong expectation (no error raised). It failed with `AssertionError: Expected no error but got ValueError`, so the test can detect the `ValueError`. This does not prove the guard is correct, or that a wrong route would be detected.
 
 **Limitation:** Tested on a 3-city scratch graph with one isolated city and the original `dijkstra` only. `dijkstra_with_transfers` and the real Dataset v1 are not covered by this test.
 
