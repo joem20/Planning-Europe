@@ -750,13 +750,13 @@ The other three Brussels combinations (L19 + L04, L07 + L18, L07 + L04) are expe
 | 20 | Direct (L05) | £105.16 | Direct (L05) | £105.16 |
 | 30 | Direct (L05) | £139.99 | Direct (L05) | £139.99 |
 
-**Critical case, λ = 5:** without the penalty Via Brussels costs £50.73 against Direct £52.915. With the penalty Via Brussels costs £53.23, so Direct wins. The margin is small (£0.315). The winner changes with the penalty for λ between about 4.92 and 5.67.
+**Critical case, λ = 5:** without the penalty Via Brussels costs £50.73 against Direct £52.915. With the penalty, Via Brussels costs £53.23, so Direct wins. The margin is small (£0.315). The winner changes with the penalty for λ between about 4.92 and 5.67.
 
 ---
 
 #### 4. Lyon → Cologne (full numerical)
 
-Lyon connects only to Paris and Milan, so every route to Cologne has at least three links. This pair tests the accumulation of penalties. The winner is the same with and without the penalty at these λ values. With two changes, each cost is the no-penalty cost plus exactly λ.
+Lyon connects only to Paris and Milan, so every route to Cologne has at least three links. This pair tests penalty accumulation. The winner is the same with and without the penalty at these λ values. With two changes, each cost is the no-penalty cost plus exactly λ.
 
 | λ | Winning cities | Winning links | Changes | Predicted cost |
 | ---: | --- | --- | ---: | ---: |
@@ -774,4 +774,42 @@ At λ = 0, the penalty is zero, and the predicted winner is a four-link route wi
 
 **Can-it-fail check:** change the penalty in the brute force on purpose (for example, to 0.25λ). The comparison should fail on the cases where the penalty matters, such as Berlin → Cologne at λ = 20.
 
-**Evidence (commit hash):** Prediction commit, added after committing.
+---
+
+#### 5. Frankfurt → Berlin (route + one cost; parallel links)
+
+Single-link routes, so no penalty applies. This pair tests the choice among three parallel links. L27 is cheaper and faster than L13, and cheaper than L22 (£9.99 against £22.49), so it is expected to win at every λ. The only multi-link route (via Cologne, L11 + L21, £29.16, 7.550 h) is dearer and slower than L27.
+
+| λ | Predicted winning route | Link | Predicted cost |
+| ---: | --- | --- | ---: |
+| 0 | Frankfurt → Berlin | L27 | £9.99 |
+| 5 | Frankfurt → Berlin | L27 | £29.575 |
+| 10 | Frankfurt → Berlin | L27 | £49.16 |
+| 20 | Frankfurt → Berlin | L27 | £88.33 |
+| 30 | Frankfurt → Berlin | L27 | £127.50 |
+
+---
+
+#### 6. London → Paris (route + one cost; parallel links)
+
+Single-link routes, so no penalty applies. Rail (L01, £58.00, 2.333 h) and coach (L16, £28.49, 8.333 h) are equal at λ ≈ 4.92. Coach wins below that and rail above it. At λ = 5, rail wins by only £0.49. No indirect route beats the winning direct link at any λ (the cheapest, via Amsterdam and Brussels at λ = 0, costs £65.97).
+
+| λ | Rail L01 | Coach L16 | Predicted winner |
+| ---: | ---: | ---: | --- |
+| 0 | £58.000 | £28.490 | Coach, L16 |
+| 5 | £69.665 | £70.155 | Rail, L01 |
+| 10 | £81.330 | £111.820 | Rail, L01 |
+| 20 | £104.660 | £195.150 | Rail, L01 |
+| 30 | £127.990 | £278.480 | Rail, L01 |
+
+---
+
+#### 7. Lyon → Paris (control; route + one cost)
+
+Direct rail link L06 is expected to win at all five λ values because every alternative is far longer and more expensive. No penalty applies (one link). Predicted cost at λ = 10: £20.85 + 10 × 1.933 = **£40.18**.
+
+---
+
+#### 8. Zurich → Frankfurt (control; route + one cost)
+
+Direct coach link L23 is expected to win at all five λ values, because every alternative is far longer and dearer. No penalty applies (one link). Predicted cost at λ = 10: £16.99 + 10 × 6.333 = **£80.32**.
