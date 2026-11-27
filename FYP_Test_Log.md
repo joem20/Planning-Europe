@@ -581,7 +581,7 @@ All assertions passed.
 
 **Sanity check (Sat 21 Nov 2026, 16:04):** The Milan-section assertion (below break-even) was deliberately changed to expect the Paris links ['L06', 'L14']. The cell raised an `AssertionError` on that line, so the test can fail. An earlier attempt had passed because the wrong line had been edited, and it was repeated correctly. The line was restored, and the clean rerun (16:06) passed: all assertions passed.
 
-**Note on process:** my first-hand calculations contained two arithmetic slips (a wrong Milan price, 50.634 instead of 50.66, and an addition error). I found them by checking that the cost gaps on either side of λ* should be equal. The predictions above are the corrected figures, written before any test code was run.
+**Note on process:** My first-hand calculations contained two arithmetic slips (a wrong Milan price, 50.634 instead of 50.66, and an addition error). I found them by checking that the cost gaps on either side of λ* should be equal. The predictions above are the corrected figures, written before any test code was run.
 
 **Status:** PASS
 
@@ -674,7 +674,7 @@ All results matched the predictions written before any code was changed.
 **Evidence:** Prediction commit 79f8d70; notebook commit ab16fb5 and test log commit fc22d2d
 ### T07: Interchange model on real Dataset v1 vs brute force
 
-**Predictions worked out (before running any code):** Fri 27 Nov 2026, between about 08:20 and 08:50
+**Predictions worked out (before running any code):** Fri 27 Nov 2026, between about 08:20 and 09:10
 
 **Dataset:** Dataset v1 (git tag `dataset-v1`). Link prices and times are the stored values (times to three decimals).
 
