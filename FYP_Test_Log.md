@@ -672,4 +672,106 @@ All results matched the predictions written before any code was changed.
 **Limitation:** Tested on a 3-city scratch graph with one isolated city and the original `dijkstra` only. `dijkstra_with_transfers` and the real Dataset v1 are not covered by this test.
 
 **Evidence:** Prediction commit 79f8d70; notebook commit ab16fb5 and test log commit fc22d2d
+### T07: Interchange model on real Dataset v1 vs brute force
 
+**Predictions worked out (before running any code):** Fri 27 Nov 2026, between about 08:20 and 08:50
+
+**Dataset:** Dataset v1 (git tag `dataset-v1`). Link prices and times are the stored values (times to three decimals).
+
+**Cost rule being tested:** total cost = sum over links of (price_gbp + λ × time_hours) + 0.5λ × (number of links − 1). No penalty at the origin or the destination. Every link is its own service, so every change of link is a service change.
+
+**Function under test:** `dijkstra_with_transfers(G, start, destination, λ)`. It will be compared with a brute-force enumeration of every simple route, trying every parallel link on each hop. The brute force will be written after this prediction is committed.
+
+**Sample:** 8 ordered pairs (source → target, one direction only), λ = 0, 5, 10, 20, 30 £/hour. Four pairs have full numerical predictions (below). Four have a predicted route plus one cost.
+
+**Assumption:** routes that are both dearer and slower than a competing route with at least as few interchanges cannot win. The brute force checks every route, so this is tested.
+
+---
+
+#### 1. Lyon → Zurich (full numerical)
+
+Both candidate routes have two links, so each pays one penalty of 0.5λ. The penalty cannot change the winner. The switch from Milan to Paris stays at about £13.69/h (as in T06c), and every cost is its T06 value plus 0.5λ.
+
+| Route | Links | Price | Time | Cost with penalty |
+| --- | --- | --- | --- | --- |
+| Via Milan (coach) | L24 + L15 | £50.66 | 9.366 h | 50.66 + 9.866λ |
+| Via Milan (rail) | L25 + L15 | £83.38 | 8.016 h | 83.38 + 8.516λ |
+| Via Paris | L06 + L14 | £96.74 | 6.000 h | 96.74 + 6.5λ |
+
+| λ | Via Milan L24 + L15 | Via Milan L25 + L15 | Via Paris L06 + L14 | Predicted winner |
+| ---: | ---: | ---: | ---: | --- |
+| 0 | £50.66 | £83.38 | £96.74 | Milan, L24 + L15 |
+| 5 | £99.99 | £125.96 | £129.24 | Milan, L24 + L15 |
+| 10 | £149.32 | £168.54 | £161.74 | Milan, L24 + L15 |
+| 20 | £247.98 | £253.70 | £226.74 | Paris, L06 + L14 |
+| 30 | £346.64 | £338.86 | £291.74 | Paris, L06 + L14 |
+
+---
+
+#### 2. Berlin → Cologne (full numerical)
+
+One-link route against a two-link route, so the penalty can change the winner.
+
+| Route | Links | Price | Time | Interchanges |
+| --- | --- | --- | --- | ---: |
+| Direct | L21 | £9.99 | 6.400 h | 0 |
+| Via Frankfurt | L27 + L11 | £29.16 | 5.067 h | 1 |
+
+| λ | Winner without penalty | Cost | Winner with penalty | Cost |
+| ---: | --- | ---: | --- | ---: |
+| 0 | Direct (L21) | £9.99 | Direct (L21) | £9.99 |
+| 5 | Direct (L21) | £41.99 | Direct (L21) | £41.99 |
+| 10 | Direct (L21) | £73.99 | Direct (L21) | £73.99 |
+| 20 | Via Frankfurt (L27 + L11) | £130.50 | Direct (L21) | £137.99 |
+| 30 | Via Frankfurt (L27 + L11) | £181.17 | Via Frankfurt (L27 + L11) | £196.17 |
+
+**Critical case, λ = 20:** the penalty adds 20 × 0.5 = £10 to the Frankfurt route (£130.50 → £140.50), which reverses the winner (Direct £137.99). The crossover is at about λ ≈ 14.4 without the penalty and λ ≈ 23.0 with it.
+
+L26, L13 and L22 are expected never to win.
+
+---
+
+#### 3. Amsterdam → Paris (full numerical)
+
+| Route | Links | Price | Time | Interchanges |
+| --- | --- | --- | --- | ---: |
+| Direct | L05 | £35.50 | 3.483 h | 0 |
+| Via Brussels (coach, coach) | L19 + L18 | £16.98 | 6.750 h | 1 |
+| Via Cologne and Brussels | L10 + L09 + L18 | £61.02 | 8.433 h | 2 |
+| Via London (coach, coach) | L17 + L16 | £77.48 | 19.833 h | 1 |
+
+The other three Brussels combinations (L19 + L04, L07 + L18, L07 + L04) are expected never to win. The Cologne and London routes are dearer and slower than L19 + L18 with at least as many interchanges, so they cannot win.
+
+| λ | Winner without penalty | Cost | Winner with penalty | Cost |
+| ---: | --- | ---: | --- | ---: |
+| 0 | Via Brussels (L19 + L18) | £16.98 | Via Brussels (L19 + L18) | £16.98 |
+| 5 | Via Brussels (L19 + L18) | £50.73 | Direct (L05) | £52.915 |
+| 10 | Direct (L05) | £70.33 | Direct (L05) | £70.33 |
+| 20 | Direct (L05) | £105.16 | Direct (L05) | £105.16 |
+| 30 | Direct (L05) | £139.99 | Direct (L05) | £139.99 |
+
+**Critical case, λ = 5:** without the penalty Via Brussels costs £50.73 against Direct £52.915. With the penalty Via Brussels costs £53.23, so Direct wins. The margin is small (£0.315). The winner changes with the penalty for λ between about 4.92 and 5.67.
+
+---
+
+#### 4. Lyon → Cologne (full numerical)
+
+Lyon connects only to Paris and Milan, so every route to Cologne has at least three links. This pair tests the accumulation of penalties. The winner is the same with and without the penalty at these λ values. With two changes, each cost is the no-penalty cost plus exactly λ.
+
+| λ | Winning cities | Winning links | Changes | Predicted cost |
+| ---: | --- | --- | ---: | ---: |
+| 0 | Lyon → Paris → Brussels → Amsterdam → Cologne | L06, L18, L19, L10 | 3 | £59.51 |
+| 5 | Lyon → Paris → Brussels → Cologne | L06, L18, L09 | 2 | £104.27 |
+| 10 | Lyon → Paris → Brussels → Cologne | L06, L18, L09 | 2 | £148.35 |
+| 20 | Lyon → Paris → Brussels → Cologne | L06, L04, L09 | 2 | £214.52 |
+| 30 | Lyon → Paris → Brussels → Cologne | L06, L04, L09 | 2 | £276.68 |
+
+At λ = 0, the penalty is zero, and the predicted winner is a four-link route with a runner-up only about £0.68 behind (L06, L18, L09). The Brussels–Paris leg switches from L18 to L04 between λ = 10 and λ = 20.
+
+---
+
+**Failure conditions:** Dijkstra and the brute force disagree on cost (tolerance 1e-9) or on the winning links where the cost is not tied, any prediction above does not match the code, or the function raises an error.
+
+**Can-it-fail check:** change the penalty in the brute force on purpose (for example, to 0.25λ). The comparison should fail on the cases where the penalty matters, such as Berlin → Cologne at λ = 20.
+
+**Evidence (commit hash):** Prediction commit, added after committing.
